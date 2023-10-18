@@ -68,3 +68,98 @@
 // const editedHobbies = hobbies.map(item => ({text: item}));
 // console.log(editedHobbies);
 
+// const userNameData = ["Caio", "Bianchi"];
+
+// const firstName = userNameData[0];
+// const lastName = userNameData[1];
+
+// const [firstName, lastName] = ["Caio", "Bianchi"];
+
+// console.log(firstName);
+// console.log(lastName);
+
+// const user = {
+//     name: "Caio",
+//     age: 24
+// };
+
+// const name = user.name;
+// const age = user.age;
+
+// const {name: userName, age} = {
+//     name: "Caio",
+//     age: 24
+// };
+
+// console.log(userName)
+// console.log(age)
+
+// const hobbies = ["Sports", "Cooking"];
+
+// const newHobbies = ["Reading"];
+
+// const mergedHobbies = [...hobbies, ...newHobbies]
+// console.log(mergedHobbies)
+
+// const user = {
+//     name: "Caio",
+//     age: 34
+// };
+
+// const extendedUser = {
+//     isAdmin: true,
+//     ...user
+// };
+
+// console.log(extendedUser);
+
+// const password = prompt("Your password");
+
+// if (password === "Hello") {
+//     console.log("'Hello' works!")
+// } else if (password === "hello") {
+//     console.log("'hello' works")
+// } else {
+//     console.log("Access not granted")
+// };
+
+// const hobbies = ["Sports", "Cooking", "Reading"]
+
+// for (const hobby of hobbies) {
+//     console.log(hobby)
+// };
+
+// function handleTimeout() {
+//     console.log("Timed out!");
+// }
+
+// const handleTimeout2 = () => {
+//     console.log("Timed out... again!");    
+// };
+
+// setTimeout(handleTimeout, 2000);
+// setTimeout(handleTimeout2, 3000);
+// setTimeout(() => {
+//     console.log("Timed out once more...");    
+// }, 4000);
+
+// function greeter(greetFn) {
+//     greetFn();
+// };
+
+// greeter(() => console.log("Hi!"));
+
+// function init() {
+//     function greet() {
+//         console.log("Hi!");
+//     }
+
+//     greet();
+// }
+
+// init();
+
+const hobbies = ["Sports", "Cooking", "Reading"];
+hobbies.push("Working");
+
+console.log(hobbies)

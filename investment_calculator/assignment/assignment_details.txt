@@ -1,0 +1,8 @@
+Your task: Build an "Investment Calculator" web app
+
+- Use the starting project attached to this lecture;
+- Add components for displaying a HEADER, fetching USER INPUT and outputting the RESULTS TABLE;
+- Fetch and store user input (i.e., the entered investment parameters);
+- DERIVE INVESTMENT RESULTS with help of the provided utility function (in the starting project);
+- DISPLAY investment results in a html TABLE (use <table>, <thead>, <tbody>, <tr>, <th>, <td>);
+- CONDITIONALLY display an info message in and INVALID DURATION (< 1) was entered.

@@ -1,3 +1,5 @@
+import React from "react";
+
 import classes from "./EventsList.module.css";
 
 export default function EventsList({ events }) {

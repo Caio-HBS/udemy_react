@@ -1,3 +1,6 @@
+import React from "react";
+import { Link } from "react-router-dom";
+
 import classes from "./MainNavigation.module.css";
 
 export default function MainNavigation() {
@@ -6,10 +9,10 @@ export default function MainNavigation() {
       <nav>
         <ul className={classes.list}>
           <li>
-            <a>Home</a>
+            <Link to="/">Home</Link>
           </li>
           <li>
-            <a>Events</a>
+          <Link to="/events">Events</Link>
           </li>
         </ul>
       </nav>

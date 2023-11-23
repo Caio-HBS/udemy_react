@@ -1,5 +1,5 @@
 import React from "react";
-import { useRouteLoaderData, useParams, redirect } from "react-router-dom";
+import { useRouteLoaderData, redirect,  } from "react-router-dom";
 
 import EventItem from "../components/EventItem.jsx";
 
@@ -30,7 +30,7 @@ export async function loader({ request, params }) {
 export async function action({ request, params }) {
   const response = await fetch(`http://localhost:8080/events/${params.eventId}`, {
     method: request.method,
-    
+
   });
 
   if (!response.ok) {

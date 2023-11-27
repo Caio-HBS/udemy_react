@@ -19,6 +19,7 @@ export default function ProductItem(props) {
         price,
       })
     );
+
   }
 
   return (

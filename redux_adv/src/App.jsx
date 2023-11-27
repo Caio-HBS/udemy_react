@@ -7,6 +7,7 @@ import Products from "./components/Shop/Products.jsx";
 import Notification from "./components/UI/Notification.jsx";
 
 import { uiActions } from "./store/ui-slice.jsx";
+import { cartActions } from "./store/cart-slice.jsx";
 
 let isInitial = true;
 const firebaseEndpoint = import.meta.env.VITE_REACT_FIREBASE_URL;
@@ -42,8 +43,6 @@ export default function App() {
           message: "Sent cart data was successfull!",
         })
       );
-
-      const responseData = await response.json();
     }
 
     if (isInitial) {
@@ -61,6 +60,38 @@ export default function App() {
       );
     });
   }, [cart, dispatch]);
+
+  useEffect(() => {
+    async function fetchCartData() {
+      const response = await fetch(firebaseEndpoint);
+
+      if (!response.ok) {
+        throw new Error("Couldn't fetch cart data :(");
+      }
+
+      const data = await response.json();
+
+      return data;
+    }
+
+    async function fetchData() {
+      try {
+        const cartData = await fetchCartData();
+        dispatch(cartActions.replaceCart(cartData));
+      } catch (error) {
+        dispatch(
+          uiActions.showNotification({
+            status: "error",
+            title: "Error!",
+            message: "Fetching cart data failed :(",
+          })
+        );
+      }
+    }
+    if (isInitial) {
+      fetchData();
+    }
+  }, [dispatch]);
 
   return (
     <>

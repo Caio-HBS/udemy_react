@@ -1,15 +1,17 @@
-import Header from './components/Header.jsx';
-import Login from './components/Login.jsx';
+import React from "react";
 
-function App() {
+import Signup from "./components/Signup.jsx";
+import Header from "./components/Header.jsx";
+import Login from "./components/Login.jsx";
+
+export default function App() {
   return (
     <>
       <Header />
       <main>
-        <Login />
+        {/* <Login /> */}
+        <Signup />
       </main>
     </>
   );
 }
-
-export default App;

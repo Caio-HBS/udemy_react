@@ -1,16 +1,22 @@
-import React, { useRef } from "react";
+import React, { useState } from "react";
 
 export default function Login() {
-  const email = useRef();
-  const password = useRef();
+  const [loginForm, setLoginForm] = useState({
+    email: "",
+    password: "",
+  });
 
   function handleSubmit(event) {
     event.preventDefault();
 
-    const enteredEmail = email.current.value;
-    const enteredPassword = password.current.value;
+    console.log(loginForm);
+  }
 
-    console.log(enteredEmail, enteredPassword);
+  function handleInputChange(value, identifier) {
+    setLoginForm((prevState) => ({
+      ...prevState,
+      [identifier]: value,
+    }));
   }
 
   return (
@@ -25,7 +31,8 @@ export default function Login() {
             type="email"
             name="email"
             placeholder="Your email"
-            ref={email}
+            onChange={(event) => handleInputChange(event.target.value, "email")}
+            value={loginForm.email}
           />
         </div>
 
@@ -36,7 +43,10 @@ export default function Login() {
             type="password"
             name="password"
             placeholder="Your password"
-            ref={password}
+            onChange={(event) =>
+              handleInputChange(event.target.value, "password")
+            }
+            value={loginForm.password}
           />
         </div>
       </div>

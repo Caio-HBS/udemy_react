@@ -10,9 +10,9 @@ export default function App() {
     <>
       <Header />
       <main>
-        <Signup />
+        {/* <Signup /> */}
         {/* <Login /> */}
-        {/* <StateLogin /> */}
+        <StateLogin />
       </main>
     </>
   );

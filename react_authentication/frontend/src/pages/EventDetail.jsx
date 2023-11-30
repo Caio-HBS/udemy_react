@@ -7,6 +7,8 @@ import {
   Await,
 } from "react-router-dom";
 
+import { getAuthToken } from "../util/auth.js";
+
 import EventItem from "../components/EventItem.jsx";
 import EventsList from "../components/EventsList.jsx";
 
@@ -76,8 +78,13 @@ export async function loader({ request, params }) {
 
 export async function action({ params, request }) {
   const eventId = params.eventId;
+
+  const token = getAuthToken();
   const response = await fetch("http://localhost:8080/events/" + eventId, {
     method: request.method,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
 
   if (!response.ok) {

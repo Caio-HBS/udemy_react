@@ -8,7 +8,7 @@ You can buy this course at: https://www.udemy.com/course/react-the-complete-guid
 
 ## Goals
 
-With this course, my goals were to improve my abilities as a developer, especifically when it comes to front-end applications and React/other JS frameworks.
+With this course, my goals were to improve my abilities as a developer, especifically when it comes to front-end applications and React.JS as well as other JS frameworks.
 
 ## Disclaimer
 

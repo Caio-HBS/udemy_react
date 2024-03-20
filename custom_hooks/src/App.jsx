@@ -20,6 +20,7 @@ function App() {
   const {
     isFetching,
     fetchedData: userPlaces,
+    setFetchedData: setUserPlaces,
     error,
   } = useFetch(fetchUserPlaces, []);
 
@@ -75,7 +76,7 @@ function App() {
 
       setModalIsOpen(false);
     },
-    [userPlaces]
+    [userPlaces, setUserPlaces]
   );
 
   function handleError() {

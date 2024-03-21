@@ -16,6 +16,7 @@ export default function NewEventsSection() {
   } = useQuery({
     queryKey: ["events"],
     queryFn: fetchEvents,
+    staleTime: 5000,
   });
 
   let content;

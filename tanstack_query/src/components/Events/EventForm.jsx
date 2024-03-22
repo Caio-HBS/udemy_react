@@ -1,9 +1,18 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+
+import { fetchSelectableImages } from "../../util/http.js";
 
 import ImagePicker from "../ImagePicker.jsx";
+import ErrorBlock from "../UI/ErrorBlock.jsx";
 
 export default function EventForm({ inputData, onSubmit, children }) {
   const [selectedImage, setSelectedImage] = useState(inputData?.image);
+
+  const { data, isPending, isError } = useQuery({
+    queryKey: ["events-images"],
+    queryFn: fetchSelectableImages,
+  });
 
   function handleSelectImage(image) {
     setSelectedImage(image);
@@ -29,15 +38,22 @@ export default function EventForm({ inputData, onSubmit, children }) {
           defaultValue={inputData?.title ?? ""}
         />
       </p>
-
-      <div className="control">
-        <ImagePicker
-          images={[]}
-          onSelect={handleSelectImage}
-          selectedImage={selectedImage}
+      {isPending && <p>Loading selectable images...</p>}
+      {isError && (
+        <ErrorBlock
+          title="Failed to fetch images."
+          message="Something went wrong when trying to fetch selectable images."
         />
-      </div>
-
+      )}
+      {data && (
+        <div className="control">
+          <ImagePicker
+            images={data}
+            onSelect={handleSelectImage}
+            selectedImage={selectedImage}
+          />
+        </div>
+      )}
       <p className="control">
         <label htmlFor="description">Description</label>
         <textarea
@@ -46,7 +62,6 @@ export default function EventForm({ inputData, onSubmit, children }) {
           defaultValue={inputData?.description ?? ""}
         />
       </p>
-
       <div className="controls-row">
         <p className="control">
           <label htmlFor="date">Date</label>
@@ -57,7 +72,6 @@ export default function EventForm({ inputData, onSubmit, children }) {
             defaultValue={inputData?.date ?? ""}
           />
         </p>
-
         <p className="control">
           <label htmlFor="time">Time</label>
           <input
@@ -68,7 +82,6 @@ export default function EventForm({ inputData, onSubmit, children }) {
           />
         </p>
       </div>
-
       <p className="control">
         <label htmlFor="location">Location</label>
         <input
@@ -78,7 +91,6 @@ export default function EventForm({ inputData, onSubmit, children }) {
           defaultValue={inputData?.location ?? ""}
         />
       </p>
-
       <p className="form-actions">{children}</p>
     </form>
   );

@@ -17,22 +17,20 @@ export default function EventDetails() {
     queryFn: ({ signal }) => fetchEvent({ id, signal }),
   });
 
-  const {
-    mutate,
-    isPending: isMutationPending,
-    isError: isMutationError,
-    error: mutationError,
-  } = useMutation({
+  const { mutate } = useMutation({
     mutationFn: deleteEvent,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["events"] });
+      queryClient.invalidateQueries({
+        queryKey: ["events"],
+        refetchType: "none",
+      });
       navigate("/events");
     },
   });
 
   function handleDelete(event) {
     event.preventDefault();
-    
+
     mutate({ id });
   }
 
@@ -44,42 +42,48 @@ export default function EventDetails() {
           View all Events
         </Link>
       </Header>
-      {isPending && <p>Fetching event details...</p>}
-      {isError && (
-        <ErrorBlock
-          title="Failed to fetch event details."
-          message={
-            error.info?.message ||
-            "There was a problem trying to fetch the event details. Please try again later."
-          }
-        />
-      )}
-      {data && (
-        <article id="event-details">
-          <header>
-            <h1>{data.title}</h1>
-            <nav>
-              <button onClick={handleDelete}>Delete</button>
-              <Link to="edit">Edit</Link>
-            </nav>
-          </header>
-          <div id="event-details-content">
-            <img
-              src={`http://localhost:3000/${data.image}`}
-              alt="Event image."
-            />
-            <div id="event-details-info">
-              <div>
-                <p id="event-details-location">{data.location}</p>
-                <time dateTime={`Todo-DateT$Todo-Time`}>
-                  {data.date} @ {data.time}
-                </time>
-              </div>
-              <p id="event-details-description">{data.description}</p>
-            </div>
+      <article id="event-details">
+        {isPending && (
+          <div id="event-details-content" className="center">
+            <p>Fetching event details...</p>
           </div>
-        </article>
-      )}
+        )}
+        {isError && (
+          <ErrorBlock
+            title="Failed to fetch event details."
+            message={
+              error.info?.message ||
+              "There was a problem trying to fetch the event details. Please try again later."
+            }
+          />
+        )}
+        {data && (
+          <>
+            <header>
+              <h1>{data.title}</h1>
+              <nav>
+                <button onClick={handleDelete}>Delete</button>
+                <Link to="edit">Edit</Link>
+              </nav>
+            </header>
+            <div id="event-details-content">
+              <img
+                src={`http://localhost:3000/${data.image}`}
+                alt="Event image."
+              />
+              <div id="event-details-info">
+                <div>
+                  <p id="event-details-location">{data.location}</p>
+                  <time dateTime={`Todo-DateT$Todo-Time`}>
+                    {data.date} @ {data.time}
+                  </time>
+                </div>
+                <p id="event-details-description">{data.description}</p>
+              </div>
+            </div>
+          </>
+        )}
+      </article>
     </>
   );
 }

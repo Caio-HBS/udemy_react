@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { Link, Outlet, useParams, useNavigate } from "react-router-dom";
 
 import { queryClient, fetchEvent, deleteEvent } from "../../util/http.js";
 
 import Header from "../Header.jsx";
+import Modal from "../UI/Modal.jsx";
 import ErrorBlock from "../UI/ErrorBlock.jsx";
 
 export default function EventDetails() {
+  const [isDeleting, setIsDeleting] = useState(false);
+
   const navigate = useNavigate();
 
   const { id } = useParams();
@@ -17,7 +20,12 @@ export default function EventDetails() {
     queryFn: ({ signal }) => fetchEvent({ id, signal }),
   });
 
-  const { mutate } = useMutation({
+  const {
+    mutate,
+    isPending: isPendingDeletion,
+    isError: isErrorDeletion,
+    error: deletionError,
+  } = useMutation({
     mutationFn: deleteEvent,
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -28,6 +36,14 @@ export default function EventDetails() {
     },
   });
 
+  function handleStartDelete() {
+    setIsDeleting(true);
+  }
+
+  function handleStopDelete() {
+    setIsDeleting(false);
+  }
+
   function handleDelete(event) {
     event.preventDefault();
 
@@ -36,6 +52,37 @@ export default function EventDetails() {
 
   return (
     <>
+      {isDeleting && (
+        <Modal onClose={handleStopDelete}>
+          <h2>Are you sure you want to delete this event?</h2>
+          <p>
+            This event will be deleted <strong>FOREVER</strong> (a very long
+            time).
+          </p>
+          <div className="form-actions">
+            {isPendingDeletion && <p>Deleting...</p>}
+            {!isPendingDeletion && (
+              <>
+                <button onClick={handleStopDelete} className="button-text">
+                  Cancel
+                </button>
+                <button onClick={handleDelete} className="button">
+                  Delete
+                </button>
+              </>
+            )}
+          </div>
+          {isErrorDeletion && (
+            <ErrorBlock
+              title="Error trying to delete event"
+              message={
+                deletionError.info?.message ||
+                "Couldn't delete event. Try again later."
+              }
+            />
+          )}
+        </Modal>
+      )}
       <Outlet />
       <Header>
         <Link to="/events" className="nav-item">
@@ -62,7 +109,7 @@ export default function EventDetails() {
             <header>
               <h1>{data.title}</h1>
               <nav>
-                <button onClick={handleDelete}>Delete</button>
+                <button onClick={handleStartDelete}>Delete</button>
                 <Link to="edit">Edit</Link>
               </nav>
             </header>

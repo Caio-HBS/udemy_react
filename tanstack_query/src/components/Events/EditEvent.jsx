@@ -7,14 +7,13 @@ import { queryClient, fetchEvent, updateEvent } from "../../util/http.js";
 import Modal from "../UI/Modal.jsx";
 import EventForm from "./EventForm.jsx";
 import ErrorBlock from "../UI/ErrorBlock.jsx";
-import LoadingIndicator from "../UI/LoadingIndicator.jsx";
 
 export default function EditEvent() {
   const { id } = useParams();
 
   const navigate = useNavigate();
 
-  const { data, isPending, isError, error } = useQuery({
+  const { data, isError, error } = useQuery({
     queryKey: ["events", { details: id }],
     queryFn: ({ signal }) => fetchEvent({ id, signal }),
   });
@@ -36,7 +35,7 @@ export default function EditEvent() {
 
       return { previousEvent };
     },
-    onError: (error, data, context) => {
+    onError: (context) => {
       queryClient.setQueryData(
         ["events", { details: id }],
         context.previousEvent
@@ -58,11 +57,6 @@ export default function EditEvent() {
 
   return (
     <Modal onClose={handleClose}>
-      {isPending && (
-        <div className="center">
-          <LoadingIndicator />
-        </div>
-      )}
       {isError && (
         <>
           <ErrorBlock
@@ -90,4 +84,11 @@ export default function EditEvent() {
       )}
     </Modal>
   );
+}
+
+export function loader({ params }) {
+  return queryClient.fetchQuery({
+    queryKey: ["events", { details: params.id }],
+    queryFn: ({ signal }) => fetchEvent({ id: params.id, signal }),
+  });
 }

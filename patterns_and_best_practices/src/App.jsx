@@ -1,8 +1,49 @@
 import React from "react";
 
+import desertImg from "./assets/desert-dunes.jpg";
+import amazonImg from "./assets/amazon-river.jpg";
+import forestImg from "./assets/forest-waterfall.jpg";
+import savannaImg from "./assets/african-savanna.jpg";
+import caribbeanImg from "./assets/caribbean-beach.jpg";
+
+import Place from "./components/Place.jsx";
 import Accordion from "./components/accordion/Accordion.jsx";
 import AccordionBody from "./components/accordion/AccordionBody.jsx";
 import AccordionTitle from "./components/accordion/AccordionTitle.jsx";
+import SearchableList from "./components/searchablelist/SearchableList.jsx";
+
+const PLACES = [
+  {
+    id: "african-savanna",
+    image: savannaImg,
+    title: "African Savanna",
+    description: "Experience the beauty of nature.",
+  },
+  {
+    id: "amazon-river",
+    image: amazonImg,
+    title: "Amazon River",
+    description: "Get to know the largest river in the world.",
+  },
+  {
+    id: "caribbean-beach",
+    image: caribbeanImg,
+    title: "Caribbean Beach",
+    description: "Enjoy the sun and the beach.",
+  },
+  {
+    id: "desert-dunes",
+    image: desertImg,
+    title: "Desert Dunes",
+    description: "Discover the desert life.",
+  },
+  {
+    id: "forest-waterfall",
+    image: forestImg,
+    title: "Forest Waterfall",
+    description: "Listen to the sound of the water.",
+  },
+];
 
 export default function App() {
   return (
@@ -39,6 +80,14 @@ export default function App() {
             </AccordionBody>
           </Accordion.Item>
         </Accordion>
+      </section>
+      <section>
+        <SearchableList items={PLACES} itemKeyFn={(item) => item.id}>
+          {(item) => <Place item={item} />}
+        </SearchableList>
+        <SearchableList items={["item 1", "item 2"]} itemKeyFn={(item) => item}>
+          {(item) => item}
+        </SearchableList>
       </section>
     </main>
   );

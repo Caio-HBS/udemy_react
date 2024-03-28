@@ -1,9 +1,13 @@
-import "./App.css";
+import Todos from "./components/Todos.tsx";
+
+import Todo from "./models/todo.ts";
 
 export default function App() {
+  const todos = [new Todo("Learn React"), new Todo("Learn Typescript")];
+
   return (
     <div>
-      This is your project!
+      <Todos items={todos} />
     </div>
   );
 }

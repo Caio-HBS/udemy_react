@@ -16,10 +16,16 @@ export default function App() {
     });
   }
 
+  function handleDeleteTodo(todoId: string) {
+    setTodos((prevState) => {
+      return prevState.filter((todo) => todo.id !== todoId);
+    });
+  }
+
   return (
     <div>
       <NewTodo onCreateTodo={handleCreateTodo} />
-      <Todos items={todos} />
+      <Todos items={todos} onDeleteTodo={handleDeleteTodo} />
     </div>
   );
 }
